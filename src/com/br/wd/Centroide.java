@@ -1,11 +1,12 @@
 package com.br.wd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Centroide {
     private int id;
     private List<Integer> atributos;
-    private List<Ponto> pontos;
+    private List<Ponto> pontos = new ArrayList<>();
     private static int idCounter;
 
     public Centroide(List<Integer> atributos) {
@@ -14,8 +15,16 @@ public class Centroide {
         this.atributos = atributos;
     }
 
+    public void addPonto(Ponto ponto){
+        pontos.add(ponto);
+    }
+
     public List<Integer> getAtributos() {
         return atributos;
+    }
+
+    public List<Ponto> getPontos() {
+        return pontos;
     }
 
     public int getId() {

@@ -5,29 +5,28 @@ import java.util.List;
 
 public class Sequencial {
     private Starter starter = new Starter();
-    private List<Centroide> centroides = starter.getCentroides();
-    private List<Ponto> pontos = starter.getPontos();
     private Functions functions = new Functions();
 
 
-    public void calcDistancia(){
+    public void obterCentroide(Starter starter) {
         double menorDistancia = Double.MAX_VALUE;
-        int idCloseCentroide = Integer.MAX_VALUE;
-        for (int i = 0; i < pontos.size() ; i++) {
-            for (Centroide centroide : centroides){
-                if (functions.calcularDistancia(pontos.get(i),centroide) < menorDistancia){
-                    idCloseCentroide = centroide.getId();
+        double distanciaAtual = 0;
+        for (int i = 0; i < starter.getPontos().size(); i++) {
+            for (Centroide centroide : starter.getCentroides()) {
+                distanciaAtual = functions.calcularDistancia(starter.getPontos().get(i), centroide);
+                System.out.println("distancia atual: "+distanciaAtual);
+                if (distanciaAtual < menorDistancia) {
+                    menorDistancia = distanciaAtual;
+                    Ponto ponto = starter.getPontos().get(i);
+                    centroide.addPonto(ponto);
+
                 }
             }
-            pontos.get(i).setCentroide(centroides.get());
         }
+        System.out.println("para aqui");
     }
 
-    public void calculaCentroide(){
-        for (Ponto ponto : pontos){
 
-        }
-    }
 
 
 }
