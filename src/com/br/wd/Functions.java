@@ -17,10 +17,13 @@ public class Functions {
 
     private List<Integer> teste = new ArrayList<>();
 
-    public double calcularDistancia(Ponto atbPonto, Centroide atbCentroide){
+    public double calcularDistancia(Ponto atbPonto, Centroide atbCentroide)throws Exception {
         double somatorio = 0;
+
         for (int i = 0; i < atbPonto.getAtributos().size(); i++) {
-            somatorio =+ calcularAux(atbPonto.getAtributos().get(i), atbCentroide.getAtributos().get(i));
+
+            somatorio += calcularAux(atbPonto.getAtributos().get(i), atbCentroide.getAtributos().get(i));
+
         }
         return Math.sqrt(somatorio);
     }

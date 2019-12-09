@@ -14,6 +14,22 @@ public class Starter {
     private List<Centroide> centroides = new ArrayList<>();
     private List<Ponto> pontos = new ArrayList<>();
 
+    public Boolean comparaAtr(List<Integer> old, List<Integer> nova) {
+        Boolean toReturn = true;
+        if (old.size() == nova.size()) {
+            for (int i = 0; i < old.size(); i++) {
+                if (old.get(i).intValue() != nova.get(i).intValue()) {
+                    toReturn = false;
+                    break;
+                }
+            }
+        } else {
+            toReturn = false;
+
+        }
+        return toReturn;
+    }
+
 
     public void inicializaEntrada() {
         pontosRaw = readFile("/home/wd/int_base_59.csv");
@@ -52,6 +68,7 @@ public class Starter {
         return null;
     }
 
+
     public List<Ponto> getPontos() {
         return pontos;
     }
@@ -59,4 +76,6 @@ public class Starter {
     public List<Centroide> getCentroides() {
         return centroides;
     }
+
+
 }
