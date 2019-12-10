@@ -41,7 +41,7 @@ public class Starter {
         for (List atr : pontosRaw) {
             pontos.add(new Ponto(atr));
         }
-        System.out.println("teste");
+        System.out.println("Aguarde, o algoritmo está em execução...");
     }
 
 

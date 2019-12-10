@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sequencial {
-    private Starter starter = new Starter();
     private Functions functions = new Functions();
 
 
@@ -20,7 +19,6 @@ public class Sequencial {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    System.out.println("errouu");
                 }
 
 
