@@ -1,29 +1,29 @@
 package com.br.wd.Paralelo;
 
-import com.br.wd.*;
+import com.br.wd.Functions;
+import com.br.wd.Ponto;
+import com.br.wd.Starter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Processo implements Runnable{
-    private List<Centroide> centroides;
-    private List<Ponto> pontos;
-    int qtdThreads;
-
-    private Sequencial sequencial= new Sequencial();
-    private Paralelo paralelo = new Paralelo();
-
+public class Processo implements Runnable {
+    private Starter starter;
+    private int qtdThreads;
 
 
     private Functions functions = new Functions();
-    int threadId = Integer.parseInt(Thread.currentThread().getName());
+    String teste = Thread.currentThread().getName();
+    int threadId;
 
-    public Processo(int qtdThreads) {
+    public Processo(Starter starter, int qtdThreads, int threadId) {
         this.qtdThreads = qtdThreads;
+        this.starter = starter;
+        this.threadId = threadId;
     }
 
 
-    public void obterCentroide(Starter starter, int indexInicial) {
+    public void obterCentroide() {
 
         Ponto ponto = null;
         int aux = Integer.MAX_VALUE;
@@ -35,6 +35,7 @@ public class Processo implements Runnable{
                     distanciaAtual = functions.calcularDistancia(starter.getPontos().get(i), starter.getCentroides().get(j));
 
                 } catch (Exception e) {
+                    System.out.println("falha na chamada da função Calcular Distancia");
                     e.printStackTrace();
                 }
 
@@ -48,11 +49,10 @@ public class Processo implements Runnable{
         }
     }
 
-    public Boolean atualizaCentroides(Starter starter, int indexInicial) {
+    public Boolean atualizaCentroides() {
         Boolean toReturn = false;
-        for (int i = threadId; i < starter.getCentroides().size(); i += qtdThreads) {
 
-            for (int i = indexInicial; i < starter.getCentroides().size(); i++) {
+        for (int i = threadId; i < starter.getCentroides().size(); i += qtdThreads) {
             List<Integer> novosAtr = new ArrayList<>();
 
             for (int j = 0; j < starter.getCentroides().get(i).getAtributos().size(); j++) {
@@ -63,8 +63,8 @@ public class Processo implements Runnable{
                     try {
 
                         soma += ponto.getAtributos().get(j);
-                    }catch (Exception e){
-                        System.out.println("Falhou!");
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
                 if (!starter.getCentroides().get(i).getPontos().isEmpty()) {
@@ -85,20 +85,23 @@ public class Processo implements Runnable{
                 }
 
             }
-
         }
         return toReturn;
     }
 
+
     @Override
     public void run() {
-        sequencial.atualizaCentroides(starter);
-//        System.out.println("ooooiii");
         boolean ctrl = true;
-
+        int contador = 0;
         while (ctrl) {
-            obterCentroide(starter, 0, starter.getPontos().size());
-            ctrl = atualizaCentroides(starter, 0, starter.getCentroides().size());
+
+            obterCentroide();
+
+
+            ctrl = atualizaCentroides();
+            contador++;
         }
+        System.out.println("Thread num: "+ Thread.currentThread().getName() + " executou " + contador +" iterações");
     }
 }

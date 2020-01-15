@@ -36,22 +36,42 @@
 
 package com.br.wd;
 
-import java.util.concurrent.CyclicBarrier;
+import com.br.wd.Paralelo.Paralelo;
 
-import static com.br.wd.Functions.cont;
 
 public class Main {
     public static long tempoInicial;
     public static long tempoFinal;
     public static double tempoExecucao;
     public final static long TIMECONS = 1000000000;
+    public static String pathPontos;
+    public static String pathCentroides;
 
 
-    private static Starter starter = new Starter();
     private static Sequencial sequencial = new Sequencial();
 
     public static void main(String[] args) {
+        Integer numThreads = null;
+        try {
+            numThreads = Integer.valueOf(args[0]);
+            System.out.println(numThreads);
+        } catch (RuntimeException e) {
+            numThreads = 8;
+            System.out.println("Número de threads não informado, executando com valor padrão (8)");
+            System.out.println(" ");
+        }
+        System.err.println("Execução Paralela");
 
+        executarParalelo(numThreads);
+
+        System.err.println("Execução Sequencial");
+        executarSequencial();
+
+
+    }
+
+    private static void executarSequencial() {
+        Starter starter = new Starter();
 
         Boolean ctrl = true;
         starter.inicializaEntrada();
@@ -68,36 +88,14 @@ public class Main {
         tempoExecucao = tempoFinal - tempoInicial;
         System.out.println("Fim! tempo de execução: " + tempoExecucao / TIMECONS + " segundos");
         System.out.println("Foram feitas " + teste + " iterações");
-        System.out.println("contador: " + cont);
-
-
     }
 
-    public static void Paralelo(Starter starter) {
-//        Integer numThreads = 8;
-//        Thread threads[] = new Thread[numThreads];
-//        CyclicBarrier cyclicBarrier = new CyclicBarrier(numThreads);
-//
-//        Boolean ctrl = true;
-//        Integer numPontos = starter.getPontos().size();
-//        Integer sobra = numPontos % numThreads;
-//        Integer partes = (numPontos - sobra) / numThreads;
-//        int teste = 0;
-//        while (teste <= 100) {
-//            for (int i = 0; i < numPontos; i += partes) {
-//                for (int j = 0; j <= numThreads ; j++) {
-//
-//                }
-//
-//                for (int j = 0; j < i; j++) {
-//
-//                    sequencial.obterCentroide(starter, i * numThreads, (i + 1) * numThreads);
-//                }
-//
-//            }
-//            ctrl = sequencial.atualizaCentroides(starter);
+    private static void executarParalelo(int numThreads) {
+        Starter starter = new Starter();
 
-//        }
+        starter.inicializaEntrada();
+        Paralelo paralelo = new Paralelo(starter);
+        paralelo.executarParalelo(numThreads);
     }
 
 

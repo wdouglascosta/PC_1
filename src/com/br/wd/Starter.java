@@ -1,5 +1,7 @@
 package com.br.wd;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,10 +32,34 @@ public class Starter {
 //        return old.equals(nova);
     }
 
+    private String carregaArquivo(){
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                ".data", "data");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showOpenDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            return chooser.getSelectedFile().getAbsolutePath();
+        } else {
+            JOptionPane.showMessageDialog(null, "Arquivo Inválido!");
+            return null;
+        }
+
+    }
 
     public void inicializaEntrada() {
-        pontosRaw = readFile("/home/wd/int_base_59.csv");
-        CentroidesRaw = readFile("/home/wd/int_centroid_59_20.csv");
+        if (Main.pathPontos == null || Main.pathCentroides == null){
+
+            JOptionPane.showMessageDialog(null,"Selecione o arquivo de Pontos");
+
+            Main.pathPontos = carregaArquivo();
+            JOptionPane.showMessageDialog(null,"Selecione o arquivo de Centroides");
+
+            Main.pathCentroides = carregaArquivo();
+        }
+
+        pontosRaw = readFile(Main.pathPontos);
+        CentroidesRaw = readFile(Main.pathCentroides);
 
         for (List atr : CentroidesRaw) {
             centroides.add(new Centroide(atr));
