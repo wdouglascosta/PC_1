@@ -1,8 +1,5 @@
 package com.br.wd;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Functions {
     public static long cont = 0;
 
@@ -16,13 +13,14 @@ public class Functions {
         }
         return Math.sqrt(somatorio);
 //        return somatorio;
+
     }
 
     private double calcularAux(Integer x, Integer y) {
         int z;
         z = x - y;
 //        return  z * 2;
-        return Math.pow(z, 2);
+        return z * z;
     }
 
 }

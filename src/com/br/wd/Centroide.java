@@ -1,14 +1,15 @@
 package com.br.wd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Centroide {
     private int id;
     private List<Integer> atributos;
-    private List<Ponto> pontos = new ArrayList<>();
+//    private ArrayList<Ponto> pontos = new ArrayList<>();
     private static int idCounter;
-    private Integer[] atr;
+    private List pontos =Collections.synchronizedList(new ArrayList<Ponto>());
 
     public Centroide(List<Integer> atributos) {
         idCounter++;
@@ -19,6 +20,7 @@ public class Centroide {
     public void addPonto(Ponto ponto){
         pontos.add(ponto);
     }
+
 
     public List<Integer> getAtributos() {
         return atributos;
