@@ -12,7 +12,7 @@ public class Paralelo {
 
 
 //    private int numThreads = 8;
-//    CyclicBarrier barreiraThread = new CyclicBarrier(numThreads);
+    CyclicBarrier barreiraThread = new CyclicBarrier(8);
 
     private Starter starter;
     public Paralelo(Starter starter) {
